@@ -1,9 +1,7 @@
 ESP8266_MajorDoMo
 =================
 
-ESP8266 + MajorDoMo
-
-This is first version of my PHP scripts for MajorDomo and it's relation with ESP8266, based on firmware http://homes-smart.ru/esp8266
+This is first version of my PHP scripts for MajorDoMo and it's relation with ESP8266, based on firmware http://homes-smart.ru/esp8266
 
 
 License
