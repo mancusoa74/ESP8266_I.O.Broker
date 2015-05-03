@@ -1,3 +1,4 @@
+<?php
 $ip = gg("ESP8266009b63a3.wanip");
 $sw = gg("EESSPP.Switch");
 //say($sw);
