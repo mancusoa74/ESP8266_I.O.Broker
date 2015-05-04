@@ -1,5 +1,5 @@
 <?php
-if ($params['idesp'] == "") { 
+if (!isset($params['idesp'])) { 
   return;
 }
 
@@ -18,7 +18,7 @@ $properties = array(
 );
 
 foreach ($properties as $k => $property) {
-  if (!empty($params[$property])) {
+  if (isset($params[$property])) {
     sg(($params['idesp'] . "." . $property), $params[$property]);
   }
 }
