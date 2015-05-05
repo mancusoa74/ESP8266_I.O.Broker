@@ -18,7 +18,7 @@ if ($sw == 1) {
     setPWM($url, 1, $value);
     setPWM($url, 2, $value);
     
-    sleep(round($t_on / $c_on, 2));
+    sleep(ceil($t_on / $c_on, 2));
   }
  setGlobal(("EESSPP.pwm0"),255); // устанавливаем принудительно слайдер канала 0 в макс.значение
  setGlobal(("EESSPP.pwm1"),255); // устанавливаем принудительно слайдер канала 1 в макс.значение
@@ -29,8 +29,8 @@ if ($sw == 0) {
   $level1 = gg("EESSPP.pwm1");
   $level2 = gg("EESSPP.pwm2");
   $max = max(array($level0, $level1, $level2));
-  $step = round(($t_off * 1000) /  $max);
-  $cycles = round($max / $step);
+  $step = ceil(($t_off * 1000) /  $max);
+  $cycles = ceil($max / $step);
   for ($i = 0; $i < $cycles; ++$i) { 
     $level0 = $level0 - $step;
     $level1 = $level1 - $step;
@@ -40,7 +40,7 @@ if ($sw == 0) {
     setPWM($url, 1, $level1 <= 0 ? 0 : $level1);
     setPWM($url, 2, $level2 <= 0 ? 0 : $level2);
     
-   sleep(round($t_off / $cycles, 2));
+   sleep(ceil($t_off / $cycles, 2));
   }
  setGlobal(("EESSPP.pwm0"),0); // устанавливаем принудительно слайдер канала 0 в мин.значение
  setGlobal(("EESSPP.pwm1"),0); // устанавливаем принудительно слайдер канала 1 в мин.значение
