@@ -1,3 +1,4 @@
+<?php
 if ($params['idesp']=="") { return; }
 addClass('ESP8266'); //Создаем класс ESP8266
 addClassObject('ESP8266',$params['idesp']); //Создаем в классе ESP8266 объект где в качестве имени 
@@ -31,6 +32,6 @@ if ($params['pwm1']!="") { sg(($params['idesp'].".pwm1"),$params['pwm1']); } //�
 if ($params['pwm2']!="") { sg(($params['idesp'].".pwm2"),$params['pwm2']); } //Состояние PWM 2
 if ($params['wanip']!="") { sg(($params['idesp'].".wanip"),$params['wanip']); } //Данные IP
 sg(($params['idesp'].".idesp"),$params['idesp']);  //
-
 $ver=$params['ver'];
 setGlobal(($idesp.".ver"),$ver);
+?>
