@@ -2,6 +2,7 @@
 $gas=gg("ESP8266009b63a3.gpioint");
 //say($gas);
 if ($gas==1) {
+say ('Сработал датчик газа в котельной',2);
 function smtpmail($mail_to, $subject, $message, $service='mail') {
 $config['smtp_charset']  = 'UTF-8';  //кодировка сообщений. (или UTF-8, итд)
 $config['smtp_from']     = 'SmartHoume'; //Ваше имя - или имя Вашего сайта. Будет показывать при прочтении в поле "От кого"
