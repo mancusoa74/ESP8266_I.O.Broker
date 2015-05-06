@@ -10,11 +10,12 @@ addClassProperty("ESP8266", "pwm0", 90);
 addClassProperty("ESP8266", "pwm1", 90);
 addClassProperty("ESP8266", "pwm2", 90);
 addClassProperty("ESP8266", "wanip", 90);
+addClassProperty("ESP8266", "gpioint", 90);
 
 //Распихиваем всё по свойствам. Если полученное значение пустое, то свойство не записываем
 $properties = array(
   "bmpp", "bmpt", "counter", "dhth1", "dhth2", "dhtt1", "dhtt2", "dsw1", "dsw2", "dsw2", "dsw3", "dsw4", "dsw5",
-  "freemem", "hostname", "light", "uptime", "vdd", "ver", "pwm0", "pwm1", "pwm2", "wanip",
+  "freemem", "hostname", "light", "uptime", "vdd", "ver", "pwm0", "pwm1", "pwm2", "wanip","gpioint"
 );
 
 foreach ($properties as $k => $property) {
