@@ -61,8 +61,6 @@ $smtp_conn = fsockopen("".$config['smtp_host']."", $config['smtp_port'],$errno, 
 	fputs($smtp_conn,"QUIT\r\n");
 	fclose($smtp_conn);
 }
-
-
 function get_data($smtp_conn)
 	{
 		$data="";
@@ -73,12 +71,10 @@ function get_data($smtp_conn)
 			}
 		return $data;
 	}
-
 $text_email = '<html><head></head><body>
 Вам отправлено сообщение системой SmartHoume <a href="http://mashintop.ru/announcement_number.php?id='.$myrow['id'].'">здесь</a><br>
 //Значение ШИМ: '.$key.'<br>                                                        
 С помощью данного ключа вы сможете управлять своим объявлением.<br>        
 </body></html>';
-                                       
 smtpmail('111@bk.ru', 'Показания датчиков SmartHoume', $text_email, 'mail'); //используем майл - первая строка - адресат
 ?>
