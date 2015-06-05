@@ -1,4 +1,3 @@
-//урок от Дмитрия Осипова - управление arduino ИК пультом
 #include <IRremote.h> // это скачанная библиотека
 #include <Wire.h>
 #include <BH1750.h>
@@ -17,7 +16,6 @@ int e=0; //
 int f=0; //
 int g=0; //
  
-
 void setup()
 {
 irrecv.enableIRIn(); // включить приемник
@@ -30,12 +28,12 @@ pinMode(5, OUTPUT);
 pinMode(6, OUTPUT);
 pinMode(7, OUTPUT);
 
-//////////////////////////
+///////////////////////////////////////////
 Serial.begin(9600);
-  lightMeter.begin();
-  Serial.println("Running...");
-  //////////////////////////////////////////
-
+ lightMeter.begin();
+ Serial.println("Running...");
+//////////////////////////////////////////
+attachInterrupt(2, interrupt_decode, CHANGE)
 } 
 
 void loop() {
@@ -44,14 +42,8 @@ uint16_t lux = lightMeter.readLightLevel();
  if (lux>35) {  
  if (lux!=luxold) {Serial.print("Light: "); Serial.print(lux); Serial.println(" lx");}
  }
-  //Serial.print(lux);
- // Serial.println(" lx");
- 
-//  delay(10);
-  
   ////////////////////////////////////////////////////////////
- 
- 
+
  if (irrecv.decode(&results)) {
   delay(3); // задержка перед выполнением определения кнопок, чтобы избежать быстрое двойное нажатие
   Serial.print("Code ");
