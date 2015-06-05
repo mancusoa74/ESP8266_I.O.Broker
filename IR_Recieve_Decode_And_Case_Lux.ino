@@ -1,9 +1,11 @@
+//урок от Дмитрия Осипова - управление arduino ИК пультом
 #include <IRremote.h> // это скачанная библиотека
 #include <Wire.h>
 #include <BH1750.h>
+
 BH1750 lightMeter;
 
-int RECV_PIN = 11; //вход ИК приемника
+int RECV_PIN = 2; //вход ИК приемника
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 int luxold=0;
@@ -21,7 +23,7 @@ void setup()
 irrecv.enableIRIn(); // включить приемник
 
 pinMode(13, OUTPUT);
-pinMode(2, OUTPUT);
+pinMode(11, OUTPUT);
 pinMode(3, OUTPUT); // назначаем пины как выходы
 pinMode(4, OUTPUT);
 pinMode(5, OUTPUT);
@@ -30,24 +32,28 @@ pinMode(7, OUTPUT);
 
 //////////////////////////
 Serial.begin(9600);
- lightMeter.begin();
- Serial.println("Running...");
-////////////////////////////////////////
+  lightMeter.begin();
+  Serial.println("Running...");
+  //////////////////////////////////////////
+
 } 
+
 void loop() {
 /////////////////////////////////////////////////////////////
 uint16_t lux = lightMeter.readLightLevel();
- if (lux>35) {  //проверяем, если значение датчика света больше 35, только тогда, если яркость изменилась, выодим её текущее знач.
+ if (lux>35) {  
  if (lux!=luxold) {Serial.print("Light: "); Serial.print(lux); Serial.println(" lx");}
  }
   //Serial.print(lux);
  // Serial.println(" lx");
  
-  //delay(10);
+//  delay(10);
   
   ////////////////////////////////////////////////////////////
+ 
+ 
  if (irrecv.decode(&results)) {
-delay(3); // задержка перед выполнением определения кнопок, чтобы избежать быстрое двойное нажатие
+  delay(3); // задержка перед выполнением определения кнопок, чтобы избежать быстрое двойное нажатие
   Serial.print("Code ");
   Serial.print(results.value, HEX);
   Serial.println (" ");
@@ -65,7 +71,7 @@ if (results.value == 0x100A8A9) {f=f+1;}
 if (results.value == 0x1006869) {g=g+1;}
 
 // начинаем включать светодиоды на пинах
-if (a==1){digitalWrite(2, HIGH);} else {digitalWrite(2, LOW); a=0;} // действие после нажатия кнопки, если переменная стала равна 1 то
+if (a==1){digitalWrite(11, HIGH);} else {digitalWrite(11, LOW); a=0;} // действие после нажатия кнопки, если переменная стала равна 1 то
 if (a==1){digitalWrite(13, HIGH);} else {digitalWrite(13, LOW); a=0;} // действие после нажатия кнопки, если переменная стала равна 1 то
 if (b==1){digitalWrite(3, HIGH);} else {digitalWrite(3, LOW); b=0;} // произвести переключение пина в режим HIGH, если же нет то вернуть переменную в исходное состояние
 //if (b==1){digitalWrite(13, HIGH);} else {digitalWrite(13, LOW); b=0;} // произвести переключение пина в режим HIGH, если же нет то вернуть переменную в исходное состояние
