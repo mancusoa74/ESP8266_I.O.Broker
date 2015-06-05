@@ -1,3 +1,4 @@
+
 #include <IRremote.h> // это скачанная библиотека
 #include <Wire.h>
 #include <BH1750.h>
@@ -7,7 +8,8 @@ BH1750 lightMeter;
 int RECV_PIN = 2; //вход ИК приемника
 IRrecv irrecv(RECV_PIN);
 decode_results results;
-int luxold=0;
+int luxold1=0;
+int luxold2=0;
 int a=0; // переменная переключения режима, при нажатии кнопки она принимает значение +1
 int b=0; //
 int c=0; //
@@ -40,16 +42,16 @@ attachInterrupt(1, ir_sensor, CHANGE); // Прерывания для распо
 void loop() {
 uint16_t lux = lightMeter.readLightLevel(); // Чтение датчика освещённости
  if (lux>35) {  
- if (lux!=luxold) {Serial.print("Light: "); Serial.print(lux); Serial.println(" lx");}
+ if (lux>luxold1 || lux<luxold2) {Serial.print("Light: "); Serial.print(lux); Serial.println(" lx");}
  }
  if (irrecv.decode(&results)) {
   //delay(3); // задержка перед выполнением определения кнопок, чтобы избежать быстрое двойное нажатие
   Serial.print("Code ");
   Serial.print(results.value, HEX);
   Serial.println (" ");
-  Serial.print("Light: ");
-  Serial.print(lux);
-  Serial.println(" lx");
+  //Serial.print("Light: ");
+ // Serial.print(lux);
+ // Serial.println(" lx");
   //if (results.value == 0x55173B8B) {a=a+1;} // обработка нажитя клавиши, здесь переменная принимает значение +1
 if (results.value == 0xF6A075A7) {a=a+1;} // обработка нажитя клавиши, здесь переменная принимает значение +1
 //if (results.value == 0xCD9DF683) {b=b+1;} //ВАЖНО !!! ( 1008889 ) это код кнопки №2 - моего пульта от телевизора Panasonic - у вашего пульта будет другой код - замените на свой
@@ -75,7 +77,8 @@ if (g==1){digitalWrite(7, HIGH);} else {digitalWrite(7, LOW); g=0;} // дейс�
 } //
 irrecv.resume(); // 
 }
-luxold=lux;
+luxold1=lux+1;
+luxold2=lux-1;
 }
 void ir_sensor(){ //Функция прерывания для считывания показаний с ИК Датчика
 ir_sens=digitalRead(3);
