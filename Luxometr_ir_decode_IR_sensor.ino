@@ -81,5 +81,5 @@ void ir_sensor(){ //Функция прерывания для считыван�
 ir_sens=digitalRead(3);
 if (ir_sens==1) digitalWrite(6, HIGH); //Включение светодиоад
 if (ir_sens==0) digitalWrite(6, LOW); //Отключение светодиода
-Serial.println(ir_sens);
+//Serial.println(ir_sens);
 }
