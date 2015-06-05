@@ -43,9 +43,12 @@ uint16_t lux = lightMeter.readLightLevel();
  if (lux!=luxold) {Serial.print("Light: "); Serial.print(lux); Serial.println(" lx");}
  }
   ////////////////////////////////////////////////////////////
-
+} //////? Конец цикла?
+ 
+ void interrupt_decode ()
+ {
  if (irrecv.decode(&results)) {
-  delay(3); // задержка перед выполнением определения кнопок, чтобы избежать быстрое двойное нажатие
+  //delay(3); // задержка перед выполнением определения кнопок, чтобы избежать быстрое двойное нажатие
   Serial.print("Code ");
   Serial.print(results.value, HEX);
   Serial.println (" ");
@@ -81,6 +84,7 @@ irrecv.resume(); //
 
 }
 luxold=lux;
+}
 }
 
  
