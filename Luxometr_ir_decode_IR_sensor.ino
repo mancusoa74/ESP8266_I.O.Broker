@@ -20,25 +20,21 @@ unsigned int pwm=0;
 
 void setup() {                
  Serial.begin(9600);
- pinMode(2, INPUT);    // ИК приемник подключим сюда        
  IR_KEY = 0; //переменная для получения кода кнопки с ИК-пульта
  attachInterrupt(0,IRinterrupt,CHANGE); // назначим прерывание на появление импульсов с ИК-приёмника
  attachInterrupt(1, ir_sensor, CHANGE); // Прерывания для распознавания сигнала с ИК Датчика
- IncrementPWM(); //вызов функции плавного включения света
  pinMode(2,INPUT_PULLUP); // Вход ИК приёмника
  pinMode(3,INPUT_PULLUP); // Вход с ИК датчика 
  pinMode(13, OUTPUT);
  //pinMode(11, OUTPUT);
  //pinMode(10, OUTPUT); // назначаем пины как выходы
  pinMode(4, OUTPUT);
- pinMode(5, OUTPUT);
  pinMode(6, OUTPUT);
  pinMode(7, OUTPUT);
-  Serial.begin(9600);
-  lightMeter.begin();
-  Serial.println("Running...");
-}
-
+ lightMeter.begin();
+ IncrementPWM(); //вызов функции плавного включения света
+ Serial.println("Running...");
+ }
 void loop() {
  uint16_t lux = lightMeter.readLightLevel(); // Чтение датчика освещённости
   if (lux>3) {  
@@ -69,11 +65,12 @@ void IRinterrupt(){ //прерывание для обработки импус�
     return;}
   if(d_ir < 13000) IR_KEY = key; // код кнопки получен
   prevTime = currTime;
-if (IR_KEY == 0xC000305) {if (pwm1<=254) {pwm1=pwm1+7;analogWrite(10, pwm1);}}// увеличение значения pwm1 на 5
-if (IR_KEY == 0xC003105) {if (pwm1>=7) {pwm1=pwm1-7;analogWrite(10, pwm1);} else {pwm1=0;}}// уменьшение значения pwm1 на 5
-if (IR_KEY == 0xC000D05) {if (pwm2<=254) {pwm2=pwm2+7;analogWrite(11, pwm2);}}// увеличение значения pwm2 на 5
-if (IR_KEY == 0x3000F05) {if (pwm2>=7) {pwm2=pwm2-7;analogWrite(11, pwm2);} else {pwm2=0;}}// уменьшение значения pwm2 на 5
-if (IR_KEY == 0xC000905) {if (pwm3<=254) {pwm3=pwm3+7;analogWrite(5, pwm3);}}// увеличение значения pwm3 на 5
+ 
+if (IR_KEY == 0xC000305) {if (pwm1<=247) {pwm1=pwm1+7;analogWrite(10, pwm1);}}// увеличение значения pwm1 на 7
+if (IR_KEY == 0xC003105) {if (pwm1>=7) {pwm1=pwm1-7;analogWrite(10, pwm1);} else {pwm1=0;}}// уменьшение значения pwm1 на 7
+if (IR_KEY == 0xC000D05) {if (pwm2<=247) {pwm2=pwm2+7;analogWrite(11, pwm2);}}// увеличение значения pwm2 на 7
+if (IR_KEY == 0x3000F05) {if (pwm2>=7) {pwm2=pwm2-7;analogWrite(11, pwm2);} else {pwm2=0;}}// уменьшение значения pwm2 на 7
+if (IR_KEY == 0xC000905) {if (pwm3<=247) {pwm3=pwm3+7;analogWrite(5, pwm3);}}// увеличение значения pwm3 на 7
 if (IR_KEY == 0xC002505) {if (pwm3>=7) {pwm3=pwm3-7;analogWrite(5, pwm3);} else {pwm3=0;}}
 }// уменьшение значения pwm3 на 5
 // начинаем включать светодиоды на пинах
@@ -92,6 +89,9 @@ void IncrementPWM(){ // Функция плавного включения св�
   analogWrite(11, pwm);
   analogWrite(5, pwm);
   delay(50); 
-  pwm=pwm+1;  // подождать, пока датчики стабилизируются
-  } while(pwm<=255);
+  pwm=pwm+1;
+  pwm1=pwm1+1;
+  pwm2=pwm2+1;
+  pwm3=pwm3+1;
+  } while(pwm<=252);
 }
