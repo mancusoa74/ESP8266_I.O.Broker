@@ -1,4 +1,4 @@
-#include <Wire.h>
+ #include <Wire.h>
 #include <BH1750.h>
 BH1750 lightMeter;
 volatile unsigned long IR_KEY;   //код кнопки на пульте
@@ -67,11 +67,13 @@ void IRinterrupt(){ //прерывание для обработки импус�
   prevTime = currTime;
  
 if (IR_KEY == 0xC000305) {if (pwm1<=247) {pwm1=pwm1+7;analogWrite(10, pwm1);}}// увеличение значения pwm1 на 7
-if (IR_KEY == 0xC003105) {if (pwm1>=7) {pwm1=pwm1-7;analogWrite(10, pwm1);} else {pwm1=0;}}// уменьшение значения pwm1 на 7
+if (IR_KEY == 0xC003105) {if (pwm1>=7) {pwm1=pwm1-7;analogWrite(10, pwm1);} else {pwm1=0;analogWrite(10, pwm1);}}// уменьшение значения pwm1 на 7
 if (IR_KEY == 0xC000D05) {if (pwm2<=247) {pwm2=pwm2+7;analogWrite(11, pwm2);}}// увеличение значения pwm2 на 7
-if (IR_KEY == 0x3000F05) {if (pwm2>=7) {pwm2=pwm2-7;analogWrite(11, pwm2);} else {pwm2=0;}}// уменьшение значения pwm2 на 7
+if (IR_KEY == 0x3000F05) {if (pwm2>=7) {pwm2=pwm2-7;analogWrite(11, pwm2);} else {pwm2=0;analogWrite(11, pwm2);}}// уменьшение значения pwm2 на 7
 if (IR_KEY == 0xC000905) {if (pwm3<=247) {pwm3=pwm3+7;analogWrite(5, pwm3);}}// увеличение значения pwm3 на 7
-if (IR_KEY == 0xC002505) {if (pwm3>=7) {pwm3=pwm3-7;analogWrite(5, pwm3);} else {pwm3=0;}}
+if (IR_KEY == 0xC002505) {if (pwm3>=7) {pwm3=pwm3-7;analogWrite(5, pwm3);} else {pwm3=0;analogWrite(5, pwm3);}}
+if (IR_KEY == 0x3030D05) {pwm=0;IncrementPWM();}
+
 }// уменьшение значения pwm3 на 5
 // начинаем включать светодиоды на пинах
 //if (a==1){digitalWrite(11, LOW);} else {digitalWrite(11, HIGH); a=0;} // действие после нажатия кнопки, если переменная стала равна 1 то
