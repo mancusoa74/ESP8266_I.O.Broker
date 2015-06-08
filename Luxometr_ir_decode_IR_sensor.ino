@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include <BH1750.h>
 BH1750 lightMeter;
-
 volatile unsigned long IR_KEY;   //код кнопки на пульте
 //int luxold=0; //переменная для уменьшения чуствительности датчика света
 int luxold1=0;
@@ -14,9 +13,10 @@ int e=0; //
 int f=0; //
 int g=0; //
 int ir_sens=0; //ПЕРЕМЕННАЯ ДЛЯ СЧИТЫВАНИЯ ПОКАЗАНИЙ ик-дАТЧИКА 
-unsigned int pwm1=255;
-unsigned int pwm2=255;
-unsigned int pwm3=255;
+unsigned int pwm1=0;
+unsigned int pwm2=0;
+unsigned int pwm3=0;
+unsigned int pwm=0;
 
 void setup() {                
  Serial.begin(9600);
@@ -24,9 +24,7 @@ void setup() {
  IR_KEY = 0; //переменная для получения кода кнопки с ИК-пульта
  attachInterrupt(0,IRinterrupt,CHANGE); // назначим прерывание на появление импульсов с ИК-приёмника
  attachInterrupt(1, ir_sensor, CHANGE); // Прерывания для распознавания сигнала с ИК Датчика
- analogWrite(10, pwm1);
- analogWrite(11, pwm2);
- analogWrite(5, pwm3); 
+ IncrementPWM(); //вызов функции плавного включения света
  pinMode(2,INPUT_PULLUP); // Вход ИК приёмника
  pinMode(3,INPUT_PULLUP); // Вход с ИК датчика 
  pinMode(13, OUTPUT);
@@ -87,4 +85,13 @@ ir_sens=digitalRead(3);
 if (ir_sens==1) digitalWrite(6, HIGH); //Включение светодиоад
 if (ir_sens==0) digitalWrite(6, LOW); //Отключение светодиода
 //Serial.println(ir_sens);
+}
+void IncrementPWM(){ // Функция плавного включения света
+ do {
+  analogWrite(10, pwm);
+  analogWrite(11, pwm);
+  analogWrite(5, pwm);
+  delay(50); 
+  pwm=pwm+1;  // подождать, пока датчики стабилизируются
+  } while(pwm<=255);
 }
