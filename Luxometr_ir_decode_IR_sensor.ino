@@ -90,7 +90,7 @@ void IncrementPWM(){ // Функция плавного включения св�
   analogWrite(10, pwm);
   analogWrite(11, pwm);
   analogWrite(5, pwm);
-  delay(50); 
+  delay(22); 
   pwm=pwm+1;
   pwm1=pwm1+1;
   pwm2=pwm2+1;
