@@ -62,7 +62,7 @@ void IRinterrupt(){ //прерывание для обработки импул�
   currTime = micros();
   d_ir = currTime - prevTime;
   if(d_ir < 110) return;        // "дребезг"
-  if(d_ir < 1000){               // "0"
+  if(d_ir < 1900){               // "0"
     key = key << 1;
     prevTime = currTime;
     return; }
