@@ -30,7 +30,13 @@ unsigned int pwm3Off=0;
 const char* ssid     = "RT50";
 const char* password = "zyxel2011";
 
+WiFiServer server(80);  //Запускаем ВебСервер
+
 void setup() {
+// prepare GPIO2
+  pinMode(0, OUTPUT);
+  digitalWrite(0, 0);
+  
 Wire.pins(2, 13);
 Wire.begin();
 Serial.begin(115200);
@@ -58,7 +64,17 @@ lightMeter.begin();
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
   }
+  Serial.println("");
+  Serial.println("WiFi connected");
+  
+  // Start the server
+  server.begin();
+  Serial.println("Server started");
+}
 // the loop function runs over and over again forever
 void loop() {
 uint16_t lux = lightMeter.readLightLevel(); // Чтение датчика освещённости
@@ -69,6 +85,55 @@ uint16_t lux = lightMeter.readLightLevel(); // Чтение датчика ос�
    if(IR_KEY) {Serial.println(IR_KEY,HEX); IR_KEY = 0;}//выводим код в терминал.
 
 }
+//////////////////////////////////////////////////////////////////////////////////////////
+//Обработка Веб Запроса................................
+// Check if a client has connected
+  WiFiClient client = server.available();
+  if (!client) {
+    return;
+  }
+  
+  // Wait until the client sends some data
+  Serial.println("new client");
+  while(!client.available()){
+    delay(1);
+  }
+  
+  // Read the first line of the request
+  String req = client.readStringUntil('\r');
+  Serial.println(req);
+  client.flush();
+  if req=
+  // Match the request
+  ////int val;
+  /////if (req.indexOf("/gpio/0") != -1)
+ /////  digitalWrite(0, 0);
+/////  else if (req.indexOf("/gpio/1") != -1)
+   /////// val = 1;
+  ///// IncrementPWM();
+ ///// else {
+  /////  Serial.println("invalid request");
+  /////  client.stop();
+  ////  return;
+///  }
+
+  // Set GPIO2 according to the request
+    client.flush();
+
+  // Prepare the response
+  String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\nGPIO is now ";
+//  s += (val)?"high":"low";
+//  s += "</html>\n";
+
+  // Send the response to the client
+  client.print(s);
+  delay(1);
+  Serial.println("Client disonnected");
+
+  // The client will actually be disconnected 
+ 
+ // when the function returns and 'client' object is detroyed
+///////////////////////////////////////////////////////////////////
 }
 void IRinterrupt(){ //прерывание для обработки импульсов с ик ПРИЁМНИКА
   static unsigned long key, prevTime;
@@ -101,5 +166,16 @@ ir_sens=digitalRead(12);
 Serial.println(ir_sens);
 if (ir_sens==1) digitalWrite(4, HIGH); //Включение светодиоад
 if (ir_sens==0) digitalWrite(4, LOW); //Отключение светодиода
-
+}
+void IncrementPWM(){ // Функция плавного включения света
+ do {
+  analogWrite(0, pwm);
+ // analogWrite(11, pwm);
+ // analogWrite(5, pwm);
+  delay(10); 
+  pwm=pwm+1;
+  pwm1=pwm1+1;
+  pwm2=pwm2+1;
+  pwm3=pwm3+1;
+  } while(pwm<=1023);
 }
