@@ -96,7 +96,7 @@ uint16_t lux = lightMeter.readLightLevel(); // Чтение датчика ос�
   String req = client.readStringUntil('\r');
   Serial.println(req);
   client.flush();
-  if req=
+ // if req=
   // Match the request
   ////int val;
   /////if (req.indexOf("/gpio/0") != -1)
