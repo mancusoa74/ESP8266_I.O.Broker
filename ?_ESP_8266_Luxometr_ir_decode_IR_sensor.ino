@@ -1,3 +1,4 @@
+#include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <BH1750.h>
 BH1750 lightMeter;
@@ -25,13 +26,14 @@ unsigned int pwm_max_2=0;
 unsigned int pwm1Off=0;
 unsigned int pwm2Off=0;
 unsigned int pwm3Off=0;
-// the setup function runs once when you press reset or power the board
 
+const char* ssid     = "RT50";
+const char* password = "zyxel2011";
 
 void setup() {
 Wire.pins(2, 13);
 Wire.begin();
-Serial.begin(9600);
+Serial.begin(115200);
 IR_KEY = 0; //переменная для получения кода кнопки с ИК-пульта
 pinMode(14,INPUT_PULLUP); // Вход ИК приёмника
 pinMode(12,INPUT_PULLDOWN); // Вход с ИК датчика
@@ -39,10 +41,24 @@ attachInterrupt(14, IRinterrupt, FALLING); // назначим прерыван�
 attachInterrupt(12, ir_sensor, CHANGE); // Прерывания для распознавания сигнала с ИК Датчика
 lightMeter.begin();
 ///SwitchPwmOn(); //вызов функции плавного включения света
- Serial.println("Running...");
- }
-//}
+  // We start by connecting to a WiFi network
+  Serial.println();
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
 
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+  }
 // the loop function runs over and over again forever
 void loop() {
 uint16_t lux = lightMeter.readLightLevel(); // Чтение датчика освещённости
@@ -51,7 +67,7 @@ uint16_t lux = lightMeter.readLightLevel(); // Чтение датчика ос�
      luxold1=lux+1; //переменные для снижения чуствительности
      luxold2=lux-1; //переменные для снижения чуствительности
    if(IR_KEY) {Serial.println(IR_KEY,HEX); IR_KEY = 0;}//выводим код в терминал.
-  
+
 }
 }
 void IRinterrupt(){ //прерывание для обработки импульсов с ик ПРИЁМНИКА
