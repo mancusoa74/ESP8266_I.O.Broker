@@ -6,13 +6,6 @@ volatile unsigned long IR_KEY;   //код кнопки на пульте
 //int luxold=0; //переменная для уменьшения чуствительности датчика света
 int luxold1=0;
 int luxold2=0;
-int a=0; // переменная переключения режима, при нажатии кнопки она принимает значение +1
-int b=0; //
-int c=0; //
-int d=0; //
-int e=0; //
-int f=0; //
-int g=0; //
 int ir_sens=0; //ПЕРЕМЕННАЯ ДЛЯ СЧИТЫВАНИЯ ПОКАЗАНИЙ ик-дАТЧИКА
 unsigned int pwm1=0;
 unsigned int pwm2=0;
