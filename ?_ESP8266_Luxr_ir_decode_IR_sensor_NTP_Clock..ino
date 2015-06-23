@@ -1,4 +1,4 @@
- #include <ESP8266WiFi.h>
+#include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <BH1750.h>
 #include <WiFiUdp.h>
@@ -46,8 +46,8 @@ WiFiServer server(80);  //Запускаем ВебСервер
 
 void setup() {
        // prepare GPIO2
-  //////pinMode(0, OUTPUT);
-  ///////digitalWrite(0, 0);
+  pinMode(4, OUTPUT);
+  digitalWrite(0, 0);
 
 Wire.pins(2, 13);
 Wire.begin();
@@ -61,7 +61,7 @@ attachInterrupt(12, ir_sensor, CHANGE); // Прерывания для расп�
 lightMeter.begin();
 ///SwitchPwmOn(); //вызов функции плавного включения света
   // We start by connecting to a WiFi network
-  Serial.println();
+  ///Serial.println();
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -69,8 +69,8 @@ lightMeter.begin();
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(20);
-    Serial.println(".");
+    delay(70);
+    Serial.print(".");
   }
  /// Serial.println("");
   Serial.println("WiFi connected");
