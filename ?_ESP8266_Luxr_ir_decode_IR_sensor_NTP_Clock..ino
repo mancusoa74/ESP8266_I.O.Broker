@@ -1,4 +1,4 @@
-#include <ESP8266WiFi.h>
+ #include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <BH1750.h>
 #include <WiFiUdp.h>
@@ -45,16 +45,14 @@ WiFiUDP udp;
 WiFiServer server(80);  //Запускаем ВебСервер
 
 void setup() {
-///////////////////////////////
-//////////////////NTPClock.attach(5, Clock); ////Подключаем тикер для считывания NTP
-//////////////////////////////////////////////////////////////////////
-// prepare GPIO2
+       // prepare GPIO2
   pinMode(0, OUTPUT);
   digitalWrite(0, 0);
 
 Wire.pins(2, 13);
 Wire.begin();
 Serial.begin(115200);
+Serial.setDebugOutput(true);
 IR_KEY = 0; //переменная для получения кода кнопки с ИК-пульта
 pinMode(14,INPUT_PULLUP); // Вход ИК приёмника
 pinMode(12,INPUT_PULLDOWN); // Вход с ИК датчика
@@ -211,8 +209,7 @@ void Clock(){
     }
     Serial.println(epoch % 60); // print the second
   }
-  NTPClock.detach();
-  }
+   }
 //////////////////////////////////////////////////////////////////////////
 
 void IRinterrupt(){ //прерывание для обработки импульсов с ик ПРИЁМНИКА
