@@ -46,13 +46,13 @@ WiFiServer server(80);  //Запускаем ВебСервер
 
 void setup() {
        // prepare GPIO2
-  pinMode(0, OUTPUT);
-  digitalWrite(0, 0);
+  //////pinMode(0, OUTPUT);
+  ///////digitalWrite(0, 0);
 
 Wire.pins(2, 13);
 Wire.begin();
 Serial.begin(115200);
-Serial.setDebugOutput(true);
+////Serial.setDebugOutput(true);
 IR_KEY = 0; //переменная для получения кода кнопки с ИК-пульта
 pinMode(14,INPUT_PULLUP); // Вход ИК приёмника
 pinMode(12,INPUT_PULLDOWN); // Вход с ИК датчика
@@ -69,8 +69,8 @@ lightMeter.begin();
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
+    delay(20);
+    Serial.println(".");
   }
  /// Serial.println("");
   Serial.println("WiFi connected");
