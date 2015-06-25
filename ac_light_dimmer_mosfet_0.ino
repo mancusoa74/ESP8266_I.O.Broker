@@ -1,6 +1,6 @@
 /*
 ORIGINAL:
- Fading//////////////ההההההההההההההה
+ Fading//////////////??????!!!!!!!!!!!!!
  This example shows how to fade an LED using the analogWrite() function.
   The circuit:
  * LED attached from digital pin 9 to ground.
