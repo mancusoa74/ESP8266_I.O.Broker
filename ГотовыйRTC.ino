@@ -114,6 +114,7 @@ String returnDateTime(const RtcDateTime& dt)
 
 void setup(void)
 {
+   ESP.wdtDisable();
   // You can open the Arduino IDE Serial Monitor window to see what the code is doing
   Serial.begin(115200);  // Serial connection from ESP-01 via 3.3v console cable
   dht.begin();           // initialize temperature sensor
