@@ -45,6 +45,7 @@ WiFiUDP udp;
 WiFiServer server(80);  //Запускаем ВебСервер
 
 void setup() {
+ESP.wdtDisable();
        // prepare GPIO2
   pinMode(4, OUTPUT);
  /// digitalWrite(0, 0);
