@@ -2,11 +2,12 @@
 // CONNECTIONS:
 // DS3231 SDA --> SDA
 // DS3231 SCL --> SCL
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-#include <ESP8266WebServer.h>
-#include <DHT.h>
+
+#if defined(ESP8266)
 #include <pgmspace.h>
+#else
+#include <avr/pgmspace.h>
+#endif
 #include <Wire.h>  // must be incuded here so that Arduino library object file references work
 #include <RtcDS1307.h>
 
@@ -14,7 +15,7 @@ RtcDS1307 Rtc;
 
 void setup () 
 {
-    Serial.begin(115200);
+    Serial.begin(57600);
 
     Serial.print("compiled: ");
     Serial.print(__DATE__);
@@ -22,7 +23,9 @@ void setup ()
 
     //--------RTC SETUP ------------
     Rtc.Begin();
+#if defined(ESP8266)
     Wire.begin(0, 2);
+#endif
 
     RtcDateTime compiled = RtcDateTime(__DATE__, __TIME__);
     printDateTime(compiled);
@@ -84,19 +87,16 @@ void loop ()
 
 void printDateTime(const RtcDateTime& dt)
 {
-	String datestring = "";
-datestring += dt.Month();
-datestring += "/";
-datestring += dt.Day();
-datestring += "/";
-datestring += dt.Year();
-datestring += " ";
-datestring += dt.Hour();
-datestring += ":";
-datestring += dt.Minute();
-datestring += ":";
-datestring += dt.Second();
-datestring += "\n";
+	char datestring[20];
+
+	snprintf_P(datestring, 
+			countof(datestring),
+			PSTR("%02u/%02u/%04u %02u:%02u:%02u"),
+			dt.Month(),
+			dt.Day(),
+			dt.Year(),
+			dt.Hour(),
+			dt.Minute(),
+			dt.Second() );
     Serial.print(datestring);
 }
-
