@@ -62,7 +62,7 @@ IPAddress sn = IPAddress(255,255,255,0);
 
 String _status;   //Current white lamp status
 String _color;    //Current rgb color
-String _response; //Current response
+String _response; //Current responsefgfgfg
 
 //setup chip
 void setup(void){
