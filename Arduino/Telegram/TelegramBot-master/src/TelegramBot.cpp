@@ -53,7 +53,7 @@ String TelegramBOT::connectToTelegram(String command)  {
     // Connect to api.telegram.org       
     IPAddress server(149,154,167,198);
     if (client.connect(server, 443)) {  
-        //Serial.println(".... connected to server");
+        Serial.println(".... connected to server");
         String a="";
         char c;
         int ch_count=0;
