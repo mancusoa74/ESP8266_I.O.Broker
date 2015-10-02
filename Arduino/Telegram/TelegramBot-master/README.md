@@ -1,4 +1,4 @@
-#Arduino WiFi101 Shield - Telegram BOT Library
+#ESP8266 - Telegram BOT Library
 
 An Arduino IDE library around the Telegram Bot API to be used with ESP8266.
 
