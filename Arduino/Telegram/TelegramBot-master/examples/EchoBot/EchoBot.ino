@@ -11,7 +11,7 @@
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
 #include <ESP8266WiFi.h>
-#include <TelegramBot.h>
+#include <ESPTelegramBot.h>
 
 
 // Initialize Wifi connection to the router
