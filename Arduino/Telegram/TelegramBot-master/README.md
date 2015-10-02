@@ -7,7 +7,7 @@ Application written by [Giancarlo Bacchio](giancarlo.bacchio@gmail.com)
 
 ## Introduction
 
-This library provides an interface for [Telegram Bot API](https://core.telegram.org/bots/api). It is written using Arduino IDE and works using WiFiShield.
+This library provides an interface for [Telegram Bot API](https://core.telegram.org/bots/api). It is written using Arduino IDE and works using ESP8266.
 
 It is possible to define your personal Bot, make it able to read and write messges, recieve orders and report data collected from the field. 
 
