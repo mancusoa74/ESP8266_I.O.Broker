@@ -15,8 +15,8 @@
 
 
 // Initialize Wifi connection to the router
-const char *ssid = "RT50";   // cannot be longer than 32 characters!
-const char *pass = "zyxel2011";   //                              // your network key
+const char *ssid = "xxx";   // cannot be longer than 32 characters!
+const char *pass = "yyy";   //                              // your network key
 int status = WL_IDLE_STATUS;
 
 
