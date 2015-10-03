@@ -1,93 +1,7 @@
-
-#include <ESP8266WiFi.h>
-#include <PubSubClient.h>
-#include <OneWire.h>
-
-byte sensor[8];
-byte sensor1[8]={0x28, 0xB0, 0xE7, 0x20, 0x2, 0x0, 0x0, 0xAD};
-byte sensor2[8]={0x28, 0x3C, 0x37, 0xF8, 0x8, 0x0, 0x0, 0x3};
-byte sensor3[8]={0x28, 0x7A, 0x55, 0xA9, 0x5, 0x0, 0x0, 0xf9};
-byte sensor4[8]={0x28, 0x96, 0x93, 0xF9, 0x5, 0x0, 0x1, 0x33};
-byte sensor5[8]={0x28, 0x3E, 0x54, 0xF9, 0x5, 0x0, 0x0, 0xBD};
-byte sensor6[8]={0x28, 0x21, 0x6B, 0xF8, 0x8, 0x0, 0x0, 0xA6};
-byte sensor7[8]={0x28, 0x71, 0x2D, 0x47, 0x5, 0x0, 0x0, 0xF6};
-byte sensor8[8]={0x28, 0x85, 0x52, 0xF9, 0x5, 0x0, 0x0, 0xDE};
-byte sensor9[8]={0x28, 0x55, 0xB9, 0xA7, 0x5, 0x0, 0x0, 0x44};
-byte sensor10[8]={0x28, 0xED, 0x43, 0xF8, 0x5, 0x0, 0x0, 0x82};
-byte sensor11[8]={0x28, 0x7B, 0x54, 0xA8, 0x5, 0x0, 0x0, 0xAC};
-byte sensor12[8]={0x28, 0x7, 0x6E, 0x47, 0x4, 0x0, 0x0, 0x7B};
-byte sensor13[8]={0x28, 0x77, 0x55, 0xA9, 0x4, 0x0, 0x0, 0x93};
-byte sensor14[8]={0x28, 0xF7, 0xCF, 0xD9, 0x4, 0x0, 0x0, 0x9D};
-byte sensor15[8]={0x28, 0x8F, 0x9C, 0x47, 0x4, 0x0, 0x0, 0x15};
-//Define the pin number on which the onewire bus is connected
-OneWire  ds(14);  // on pin 14 (a 4.7K resistor is necessary)
-
-const char *ssid =  "you SSID";   // cannot be longer than 32 characters!
-const char *pass =  "password";   //
-
-IPAddress server(54, 75, 170, 40); /ip adress of MQTT broker
-
-//Add your topics to publish to here
-char topicTemperature[] = "             ";
-char topic1[] = "Temperature01";
-char topic2[] = "Temperature02";
-char topic3[] = "Temperature03";
-char topic4[] = "Temperature04";
-char topic5[] = "Temperature05";
-char topic6[] = "Temperature06";
-char topic7[] = "Temperature07";
-char topic8[] = "Temperature08";
-char topic9[] = "Temperature09";
-char topic10[] = "Temperature10";
-char topic11[] = "Temperature11";
-char topic12[] = "Temperature12";
-char topic13[] = "Temperature13";
-char topic14[] = "Temperature14";
-char topic15[] = "Temperature15";
-//Topic handler
-
-char topicRcv[] = "/0000";
-
-//Payload handler
-char payloadRcv[5];
-
-//Change the clientname to your liking
-String clientName = "Node1";
-unsigned long PreviousMillis = 0;
-int mqt=0;
-
-///////////////////////////////////////////////////////////
-void callback(const MQTT::Publish& pub) {
-  // handle message arrived
-}
-
-WiFiClient wclient;
-PubSubClient client(wclient, server, 11093); //connect 
-
-void setup()
+void hall_sensor()
 {
-  // Setup console
-  Serial.begin(115200);
-  Serial.setDebugOutput(true);
-  delay(10);
-  Serial.println();
- // Serial.println();
- ds.reset();
-  client.set_callback(callback);
-  WiFi.begin(ssid, pass);
-  int retries = 0;
-  while ((WiFi.status() != WL_CONNECTED) && (retries < 10)) {
-    retries++;
-    delay(500);
-    Serial.print(".");
-  }
-  if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("");
-    Serial.println("WiFi connected");
-  }
-//delay(400);
-if (client.connect(MQTT::Connect("Your name") 
-.set_auth("qwertty", "dgfdfgdf"))) ///авторизация на сервере
+hall_sens=digitalRead(4);
+Serial.println(hall_sens);
 }
 
 void temperature()
@@ -95,10 +9,11 @@ void temperature()
   byte array;
   byte topicname=0;
   int circle=1;
- 
+  int CircleTemp=1;
+  ////////////////////////////
   for ( circle = 1; circle <16; circle++) {           // we need 9 bytes
-  
- 
+   // data[i] = ds.read();
+ //  }
   byte i;
   byte present = 0;
   byte type_s;
@@ -112,71 +27,97 @@ void temperature()
     case 1:
       for (array=0; array<=7; array++) {sensor[array]=sensor1[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic1[topicname];};
-      break;
+      temp=1;
+   	  break;
     case 2:
       for (array=0; array<=7; array++) {sensor[array]=sensor2[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic2[topicname];};
-       break;
+      temp=2;
+      break;
     case 3:
       for (array=0; array<=7; array++) {sensor[array]=sensor3[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic3[topicname];};
+      temp=3;
       break;
     case 4:
       for (array=0; array<=7; array++) {sensor[array]=sensor4[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic4[topicname];};
+      temp=4;
       break;
     case 5:
       for (array=0; array<=7; array++) {sensor[array]=sensor5[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic5[topicname];};
+      temp=5;
       break;
     case 6:
       for (array=0; array<=7; array++) {sensor[array]=sensor6[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic6[topicname];};
+      temp=6;
       break;
     case 7:
       for (array=0; array<=7; array++) {sensor[array]=sensor7[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic7[topicname];};
+      temp=7;
       break;
      case 8:
       for (array=0; array<=7; array++) {sensor[array]=sensor8[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic8[topicname];};
+      temp=8;
       break;
      case 9:
       for (array=0; array<=7; array++) {sensor[array]=sensor9[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic9[topicname];};
+      temp=9;
       break;
      case 10:
       for (array=0; array<=7; array++) {sensor[array]=sensor10[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic10[topicname];};
+      temp=10;
       break;
      case 11:
       for (array=0; array<=7; array++) {sensor[array]=sensor11[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic11[topicname];};
+      temp=11;
       break;
      case 12:
       for (array=0; array<=7; array++) {sensor[array]=sensor12[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic12[topicname];};
+      temp=12;
       break;
      case 13:
       for (array=0; array<=7; array++) {sensor[array]=sensor13[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic13[topicname];};
+      temp=13;
       break;
      case 14:
       for (array=0; array<=7; array++) {sensor[array]=sensor14[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic14[topicname];};
+      temp=14;
       break;
      case 15:
       for (array=0; array<=7; array++) {sensor[array]=sensor15[array];};
       for (topicname=0; topicname<=12; topicname++) {topicTemperature[topicname]=topic15[topicname];};
       //circle=0;
+      temp=15;
       break;
   }
   ds.select(sensor);
- 
+  delay(10);
+  /*
+  for ( CircleTemp = 1; CircleTemp <680000; CircleTemp++) {           // we need 9 bytes
+  // delay(1);
+   }
+   */
   ds.write(0x44, 1);        // start conversion, with parasite power on at the end
-  delay(370);     // maybe 750ms is enough, maybe not
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+ /* for ( CircleTemp = 1; CircleTemp <680000; CircleTemp++) {           // we need 9 bytes
+  // delay(1);
+   }
+
+  */
+
+//  delay(680);     // maybe 750ms is enough, maybe not
   // we might do a ds.depower() here, but the reset will take care of it.
- //ds.depower();
   present = ds.reset();
   ds.select(sensor);
   ds.write(0xBE);         // Read Scratchpad
@@ -198,28 +139,109 @@ void temperature()
      }
   celsius = (float)raw/16.0;
 dtostrf(celsius, 4, 1, charVal);
-for(int i=0;i<5;i++)
+for(int i=0;i<4;i++)
      {
         payload+=charVal[i];
      }
-      //charVal[5]='\0';
-     client.publish(topicTemperature, (char*) payload.c_str());
-Serial.println(celsius);
+      charVal[4]='\0';
+   //   if (client.connect("Kotelnaya")){
+    // delay(300);
+  //// if (TempCounter>0)
+  //  Blynk.disconnect();// Disconnect from Blynk server
+   ///// {
+     /*  MQTTclient.connect(MQTT::Connect("Kotelnaya")
+                .set_clean_session()
+               // .set_keepalive(20)
+                ); */
+    ///  MQTTclient.publish(topicTemperature, (char*) payload.c_str());
+    ///  delay(50);
+      //MQTTclient.disconnect();
+   // }
+///////////////////////////////////////////////////////////////////////////////
 
- }
- }
- void loop()
-{
-   client.loop();
+//int circle2=1;
 
-  if(WiFi.status() == WL_CONNECTED){
-    unsigned long CurrentMillis=millis();
-     client.loop();//This keeps the connection to the broker alive
-
-    //Get and publish the DS18b20 temp every 30 seconds
-    if(CurrentMillis-PreviousMillis>30000){
-      PreviousMillis=CurrentMillis;
-    temperature();
-            }
+switch (temp){
+    case 1:
+      temp01=(char*) payload.c_str();
+     
+   ////   topicName1=topicTemperature;
+    //  Serial.println (topicName1);
+      //Blynk.virtualWrite(10, VirtTemp1);
+      break;
+    case 2:
+      temp02=(char*) payload.c_str();
+  
+   ////   topicName2=topicTemperature;
+    ///  Serial.println (topicName2);
+      //Serial.println (VirtTemp2);
+      break;
+    case 3:
+      temp03=(char*) payload.c_str();
+////      topicName3=topicTemperature;
+   ///  Serial.println (topicName3);
+      break;
+    case 4:
+      temp04=(char*) payload.c_str();
+   /////   topicName4=topicTemperature;
+   ///   Serial.println (topicName4);
+      break;
+    case 5:
+      temp05=(char*) payload.c_str();
+  /////    topicName5=topicTemperature;
+       break;
+    case 6:
+      temp06=(char*) payload.c_str();
+  /////    topicName6=topicTemperature;
+      break;
+    case 7:
+      temp07=(char*) payload.c_str();
+  ////    topicName7=topicTemperature;
+      break;
+     case 8:
+      temp08=(char*) payload.c_str();
+   /////   topicName8=topicTemperature;
+      break;
+     case 9:
+      temp09=(char*) payload.c_str();
+   /////   topicName9=topicTemperature;
+      break;
+     case 10:
+      temp10=(char*) payload.c_str();
+   /////   topicName10=topicTemperature;
+      break;
+     case 11:
+      temp11=(char*) payload.c_str();
+   /////   topicName11=topicTemperature;
+      break;
+     case 12:
+      temp12=(char*) payload.c_str();
+   ////   topicName12=topicTemperature;
+      break;
+     case 13:
+      temp13=(char*) payload.c_str();
+   ////   topicName13=topicTemperature;
+      break;
+     case 14:
+      temp14=(char*) payload.c_str();
+   /////   topicName14=topicTemperature;
+      break;
+     case 15:
+      temp15=(char*) payload.c_str();
+   ////   topicName15=topicTemperature;
+      break;
   }
+   ///// }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//      .set_keepalive(30);
+   //   }
+if (TempCounter>1){Serial.print(topicTemperature); Serial.print("  ");Serial.println(celsius,1);}
+/////Serial.println(topicTemperature);
+//temp=String(celsius);
+//temp=celsius;
+//ThingSpeak1();
 }
+TempCounter=TempCounter+1;
+//Blynk.connect();
+ }
