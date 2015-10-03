@@ -20,7 +20,7 @@
   */
 
 
-#include "TelegramBot.h"
+#include "ESPTelegramBot.h"
 
 
 TelegramBOT::TelegramBOT(String token, String name, String username)	{

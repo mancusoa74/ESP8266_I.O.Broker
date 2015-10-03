@@ -1,7 +1,7 @@
-ESP8266_MajorDoMo
+ESP8266_I.O.Broker
 =================
 
-This is first version of my PHP scripts for MajorDoMo and it's relation with ESP8266, based on firmware http://homes-smart.ru/esp8266
+This is first version of my ino sketches for esp8266 standalone and I.O.Broker (https://github.com/ioBroker) and it's relation with ESP8266, based on firmware https://github.com/esp8266/Arduino
 
 
 License

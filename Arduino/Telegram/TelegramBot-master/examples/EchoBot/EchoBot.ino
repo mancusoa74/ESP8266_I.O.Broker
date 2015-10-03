@@ -11,19 +11,19 @@
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
 #include <ESP8266WiFi.h>
-#include <TelegramBot.h>
+#include <ESPTelegramBot.h>
 
 
 // Initialize Wifi connection to the router
-const char *ssid = "RT50";   // cannot be longer than 32 characters!
-const char *pass = "zyxel2011";   //                              // your network key
+const char *ssid = "xxx";   // cannot be longer than 32 characters!
+const char *pass = "yyy";   //                              // your network key
 int status = WL_IDLE_STATUS;
 
 
 // Initialize Telegram BOT
-#define BOTtoken "124417674:AAF2fwCUBWO1oqJqdKcXPyzbp6Tbj98MF7o"  //token of TestBOT
-#define BOTname "Smart"
-#define BOTusername "SmartHoumeBot"
+#define BOTtoken "56u56qdKcXPyzbp6Tbj98MF7o"  //token of TestBOT
+#define BOTname "S56u56rt"
+#define BOTusername "S56u56ueBot"
 TelegramBOT bot(BOTtoken, BOTname, BOTusername);
 
 int Bot_mtbs = 1000; //mean time between scan messages

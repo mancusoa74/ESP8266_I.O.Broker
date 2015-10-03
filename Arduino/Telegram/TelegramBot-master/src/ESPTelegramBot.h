@@ -19,8 +19,8 @@
   */
 
 
-#ifndef TelegramBot_h
-#define TelegramBot_h
+#ifndef ESPTelegramBot_h
+#define ESPTelegramBot_h
 
 #include <Arduino.h>
 #include <WiFiClientSecure.h>
